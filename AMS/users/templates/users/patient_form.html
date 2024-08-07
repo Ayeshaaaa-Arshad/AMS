@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+     <link rel="stylesheet" href="{% static 'users/css/create_update_user_form_style.css' %}">
+{% endblock %}
+
+{% block title %}Patient Form{% endblock %}
+
+{% block content %}
+  <h2>{{ view.title }}</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}

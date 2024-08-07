@@ -1,0 +1,52 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'users/css/receptionists_style.css' %}">
+{% endblock %}
+
+{% block title %}Receptionists{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 style="text-align: center; margin-top: 20px;">Receptionists</h1>
+    {%if role == 'Admin'%}
+    <a href ="{% url 'users:receptionist_create'%}">Create Receptionist</a>
+    {%endif%}
+    <!-- Receptionists Table -->
+    <div class="receptionists-table-container">
+        <table class="receptionists-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    {%if role == 'Admin'%}
+                    <th>CRUD</th>
+                    {%endif%}
+                </tr>
+            </thead>
+            <tbody>
+                {% if receptionists %}
+                    {% for receptionist in receptionists %}
+                        <tr>
+                            <td>{{ receptionist.id }}</td>
+                            <td>{{ receptionist.user.first_name }} {{ receptionist.user.last_name }}</td>
+                            <td>{{ receptionist.user.email }}</td>
+                            {%if role == 'Admin'%}
+                            <td><a href="{% url 'users:receptionist_update' receptionist.id %}">Update</a>
+                                <a href="{% url 'users:receptionist_delete' receptionist.id %}">Delete</a>
+                          </td>
+                            {%endif%} 
+                         </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center;">No receptionists found</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

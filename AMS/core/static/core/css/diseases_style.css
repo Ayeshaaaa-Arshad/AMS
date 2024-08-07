@@ -1,0 +1,65 @@
+/* General container styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Heading styling */
+h1 {
+    text-align: center;
+    font-size: 2em;
+    color: #333;
+}
+
+/* Table styling */
+.disease-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.disease-table th, .disease-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.disease-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.disease-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.disease-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Link styling */
+.disease-table a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.disease-table a:hover {
+    text-decoration: underline;
+}
+
+/* Create Disease button styling */
+a[href="{% url 'disease_create' %}"] {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+a[href="{% url 'disease_create' %}"]:hover {
+    background-color: #0056b3;
+}

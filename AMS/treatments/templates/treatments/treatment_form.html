@@ -1,0 +1,21 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'treatments/css/treatment_form.css' %}">
+{% endblock %}
+
+{% block title %}{{ view.object.pk|yesno:"Update Treatment,Create Treatment" }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ view.object.pk|yesno:"Update Treatment,Create Treatment" }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }} <!-- Treatment form fields -->
+        {{ prescription_form.as_p }} <!-- Prescription form fields -->
+        <button type="submit" class="btn btn-primary">{{ view.object.pk|yesno:"Update Treatment,Create Treatment" }}</button>
+        <a href="{% url 'treatments:treatment_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

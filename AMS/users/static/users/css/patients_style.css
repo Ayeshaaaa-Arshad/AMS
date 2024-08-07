@@ -1,0 +1,108 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Grid Layout for My Patients */
+.my-patients {
+    margin-bottom: 40px;
+}
+
+.patient-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.patient-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.patient-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.patient-card p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* Table Layout for Other Patients */
+.other-patients {
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.patients-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.patients-table th, .patients-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.patients-table th {
+    background-color:  #3E4E56;
+    color: white;
+}
+
+.patients-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.patients-table img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .patient-grid {
+        flex-direction: column;
+    }
+
+    .patient-card {
+        max-width: 100%;
+    }
+
+    .patients-table td, .patients-table th {
+        padding: 8px;
+    }
+
+    .patients-table img {
+        width: 50px;
+        height: 50px;
+    }
+}

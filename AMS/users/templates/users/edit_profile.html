@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'users/css/edit_profile_style.css' %}">
+{% endblock %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Personal Information</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="{% url 'core:index' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<div id="notification-popup" class="notification-popup">
+    <p id="notification-message"></p>
+</div>
+{% endblock %}
+
+

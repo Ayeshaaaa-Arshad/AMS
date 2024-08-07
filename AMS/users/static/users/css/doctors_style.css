@@ -1,0 +1,108 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Grid Layout for My Doctors */
+.my-doctors {
+    margin-bottom: 40px;
+}
+
+.doctor-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.doctor-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.doctor-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.doctor-card p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* Table Layout for Other Doctors */
+.other-doctors {
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.doctors-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.doctors-table th, .doctors-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.doctors-table th {
+    background-color:  #3E4E56;
+    color: white;
+}
+
+.doctors-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.doctors-table img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .doctor-grid {
+        flex-direction: column;
+    }
+
+    .doctor-card {
+        max-width: 100%;
+    }
+
+    .doctors-table td, .doctors-table th {
+        padding: 8px;
+    }
+
+    .doctors-table img {
+        width: 50px;
+        height: 50px;
+    }
+}

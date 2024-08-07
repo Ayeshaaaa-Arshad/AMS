@@ -1,0 +1,87 @@
+{% extends "core/base.html"%}
+{%load static%}
+
+{% block extra_css %}<link rel="stylesheet" href="{% static '/treatments/css/treatments_style.css' %}">{% endblock %}
+
+{% block title %}Treatments{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 style="margin-left: 40%; margin-top: 20px;">Treatments</h1>
+    {%if role == 'Doctor' or role == 'Admin'%}
+    <a href="{%url 'treatments:treatment_create'%}">Create Treatment</a>
+    {%endif%}
+    <table class="treatment-table">
+        <thead>
+            <tr>
+                {%if role != 'Doctor'%}
+                    <th>Doctor</th>
+                {%endif%}
+                {%if role != 'Patient'%}
+                    <th>Patient</th>
+                {%endif%}
+                <th>Date</th>
+                <th>Disease</th>
+                <th>Remarks</th>
+                <th>Prescription</th>
+                {%if role == 'Patient'%}  
+                <th>Provide Feedback</th>
+                {%endif%}
+               
+                {%if role == 'Doctor' or role == 'Admin'%}
+              <th>
+                Actions
+              </th>
+                {%endif%}   
+                {%if role != 'Patient'%}  
+                <th>Feedback</th>
+                {%endif%}  
+            </tr>
+        </thead>
+        {% for treatment in Treatments%}
+        <tbody id="treatment-table-body">
+            <!-- Data will be dynamically populated here -->  
+                {%if role != 'Doctor'%}  
+                <td>{{treatment.doctor.user.first_name}} {{treatment.doctor.user.last_name}}</td>
+                {%endif%}
+                {%if role != 'Patient'%}
+                <td>{{treatment.patient.user.first_name}} {{treatment.patient.user.last_name}}</td>
+                {%endif%}
+                <td>{{treatment.date}}</td>
+                <td>{{treatment.disease.name}}</td>
+                <td> {{treatment.remarks |truncatewords:40}}</td>  
+                {%if treatment.prescriptions.details%}
+                <td> {{treatment.prescriptions.details| truncatewords:40}}</td> 
+                {%else%}
+                <td>No Prescription yet </td> 
+                {%endif%}    
+                    {%if role == 'Patient'%} 
+                    <td> 
+                    {%if not treatment.feedback%}     
+                    <a href="{%url 'treatments:provide_feedback' treatment.id%}">Provide Feedback</a>
+                    {%else%}
+                    {{treatment.feedback.comment}}
+                </td>
+                {%endif%}
+                {%endif%}     
+                {%if role == 'Admin' or role == 'Doctor'%}  
+                <td>
+                <a href="{%url 'treatments:treatment_update' treatment.id%}">Update</a>
+                </td>
+                {%endif%} 
+                
+                
+            {% if role != 'Recptionist' and role != 'Patient' %}  
+            <td>
+                {%if treatment.feedback.comment%}          
+                     {{treatment.feedback.comment|truncatewords:40}}           
+                    {%else%}
+                    No feedback
+                </td>
+                {% endif %}        
+        {% endif %}
+        </tbody>
+        {%endfor %}
+    </table>
+
+    {%endblock%}

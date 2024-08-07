@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Medicare{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'core/css/base_style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Nav Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="navbar-logo">
+                <a href="{% url 'core:index' %}"><img src="{% static 'core/images/hospital_logo.jpeg' %}" alt="Pharmacy Logo" style="width: 50px; border-radius: 10px;"></a>
+                <a href="{% url 'core:index' %}"><span class="logo-text">Medicare</span></a>
+            </div>
+            <div class="navbar-links">
+                {% if role != 'Patient'%}
+                <a href="{% url 'users:patient_list' %}" class="nav-link">Patients</a>
+                {% endif %}  
+                <a href="{% url 'users:doctor_list' %}" class="nav-link">Doctors</a>
+                <a href="{% url 'users:receptionist_list' %}" class="nav-link">Receptionists</a>
+                <a href="{% url 'appointments:appointment_list' %}" class="nav-link">Appointments</a>
+                <a href="{% url 'treatments:treatment_list' %}" class="nav-link">Treatments</a>
+                <a href="{% url 'core:announcement_list' %}" class="nav-link">Announcements</a>
+                {% if role == 'Admin'%}
+                <a href="{% url 'core:disease_list' %}" class="nav-link">Diseases</a>
+                {%endif%}
+            </div>
+            <div class="navbar-profile">
+               {% if user.is_authenticated %}
+               <a href="{% url 'users:edit_profile' id %}"><img id="profile-img" src="media/{{user.image}}" alt="profile-img" class="profile-img"></a>
+               <a href="{% url 'users:logout' %}" class="profile-label">Logout</a>
+               {% else %}
+               <a href="{% url 'users:login' %}" class="nav-link">Login</a>
+               {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <!-- Content Block -->
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Medicare. All rights reserved.</p>
+    </footer>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

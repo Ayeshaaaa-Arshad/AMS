@@ -1,0 +1,71 @@
+/* General container styling */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styling */
+h1 {
+    text-align: center;
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form p {
+    margin: 0 0 15px;
+}
+
+form .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+form .btn-primary {
+    background-color: #5a6268;
+    color: #fff;
+}
+
+form .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+form .btn-secondary {
+    background-color: rgb(179, 82, 82);
+    color: #fff;
+}
+
+form .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Input and textarea styling */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+input:focus, textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}

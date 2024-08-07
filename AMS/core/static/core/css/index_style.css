@@ -1,0 +1,650 @@
+/* Main Body style CSS */
+.main-body {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.second-div {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.prev-treatments {
+    margin-top: 40px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.prev-treatments h2 {
+    color: #3e4e56;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.treatments-list {
+    list-style:none;
+    padding: 0;
+}
+
+.treatment {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.treatment p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.prev-treatments p {
+    color: #333;
+}
+
+.prev-treatments a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.prev-treatments a:hover {
+    text-decoration: underline;
+}
+
+/* Doctor Card Styles */
+.doctor-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    display:flex;
+    width:150%;
+}
+.admin-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    display:flex;
+    width:30%;
+}
+
+.doctor-card img {
+    max-width: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.doctor-details {
+    flex: 1;
+}
+
+.doctor-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-table {
+    width: 100%;
+    background: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.info-table td {
+    padding: 15px;
+    border: none;
+}
+
+.info-table td:first-child {
+    font-weight: bold;
+    background: #3E4E56;
+    color: #FFF;
+    padding: 15px;
+    text-align: left;
+}
+
+.info-table td:last-child {
+    text-align: left;
+    padding: 15px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.book-btn, .cancel-btn, .confirm-btn {
+    padding: 10px 20px;
+    color: #FFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.3s;
+}
+
+.book-btn {
+    background-color: #3E4E56;
+}
+
+.Treatment-btn, .Appointment-btn {
+    background-color: #3E4E56;
+    padding: 10px 20px;
+    color: #FFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.3s;
+}
+
+.Treatment-btn:hover, .Appointment-btn:hover {
+    background-color: #0056b3;
+}
+
+.cancel-btn {
+    background-color: #FF5722;
+}
+
+.confirm-btn {
+    background-color: #FF5722;
+    margin-left: auto; 
+}
+
+.book-btn:hover, .cancel-btn:hover, .confirm-btn:hover {
+    background-color: #0056b3;
+}
+/* Announcements Slider Container */
+.announcements-slider {
+    margin-top: 10%;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+/* Announcements Slider Container */
+.announcements-slider {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative; 
+}
+
+/* Announcement Cards Container */
+.announcement-container {
+    display: flex;
+    flex-wrap: nowrap; 
+    overflow-x: auto;
+    gap: 20px; 
+    padding: 10px; 
+}
+
+/* Individual Announcement Card */
+.announcement-card {
+    width: 300px; 
+    max-width: calc(100% - 40px); 
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    text-align: left;
+}
+
+/* Announcement Card Title */
+.announcement-card h3 {
+    color: #3e4e56;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Announcement Card Content */
+.announcement-card p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6; 
+}
+
+/* Hover Effect */
+.announcement-card:hover {
+    transform: scale(1.02); 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation Buttons */
+.prev-announcement, .next-announcement {
+    background-color: #3e4e56;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    position:relative;
+    bottom: 10px; 
+    transform: translateX(-50%);
+    left: 23%; 
+    z-index: 1000;
+    margin-top:15px;
+    font-size: 14px; 
+    transition: background-color 0.3s, transform 0.3s ease-in-out;
+}
+
+/* Hover Effect for Navigation Buttons */
+.prev-announcement:hover, .next-announcement:hover {
+    background-color: #0056b3; 
+}
+
+
+/* Announcements and Previous Treatments Styles */
+.announcements h2, .prev-treatments h2 {
+    color: #3E4E56;
+    margin-bottom: 20px;
+}
+
+.announcements p, .prev-treatments p {
+    color: #333;
+}
+
+.announcements a, .prev-treatments a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); 
+    max-width: 400px; 
+    text-align: center;
+    position: relative; 
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #333; 
+}
+
+.modal-content p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.confirm-btn {
+    background-color: #FF5722;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, transform 0.3s ease-in-out;
+}
+
+.confirm-btn:hover {
+    background-color: #FF7043; 
+}
+
+
+/* Slider Styles */
+.slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 50vh;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slides img {
+    width: 100%;
+    height: auto;
+    margin-top: 3px;
+    flex: 1 0 100%;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+.indicator {
+    text-align: center;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.active {
+    background-color: #717171;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.pagination button {
+    padding: 10px 15px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination button:hover {
+    background-color: #ddd;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 5px;
+}
+
+.pagination button.active {
+    background-color: #3e4e56;
+    color: white;
+}
+
+
+
+/* Media query for tablets and smaller desktops */
+@media screen and (max-width: 1024px) {
+    .slider {
+        height: auto;
+    }
+
+    .slides img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Media query for tablets */
+@media screen and (max-width: 768px) {
+    .slider {
+        height: auto;
+    }
+
+    .slides img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Media query for mobile phones */
+@media screen and (max-width: 480px) {
+    .slider {
+        height: auto;
+    }
+
+    .slides img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+
+
+/* Tablets and smaller desktops */
+@media screen and (max-width: 1024px) {
+    .doctor-cards {
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    .doctor-card {
+        width: 100%;
+        max-width: 200px;
+        text-align: justify;
+    }
+}
+
+/* Tablets */
+@media screen and (max-width: 768px) {
+    .doctor-card {
+        max-width: 250px; 
+    }
+}
+
+/* Mobile phones */
+@media screen and (max-width: 480px) {
+    .doctor-card {
+        width: 100%;
+        max-width: 100%;
+        
+    }
+}
+
+/* Doctor card and Prev treatmnt and Announcment */
+
+
+/* Tablets and smaller desktops */
+@media screen and (max-width: 1024px) {
+    .main-body {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .doctor-cards {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .doctor-card {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+
+    .doctor-card img {
+        max-width: 80px;
+        margin: 0 auto 10px;
+    }
+
+    .doctor-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .info-table {
+        width: 100%;  
+        table-layout: fixed; 
+    }
+
+    .info-table td {
+        word-wrap: break-word; 
+    }
+
+    .second-div {
+        width: 100%;
+    }
+
+    .prev-treatments, .announcements-slider {
+        width: 100%;
+        margin-top: 20px;
+        padding: 15px;
+    }
+
+    .prev-announcement, .next-announcement {
+        width: auto;
+    }
+}
+
+/* Tablets */
+@media screen and (max-width: 768px) {
+    .doctor-card {
+        max-width: 650px;
+    }
+
+    .doctor-card img {
+        max-width: 60px;
+    }
+
+    .info-table {
+        width: 100%;  
+        table-layout: fixed; 
+    }
+
+    .info-table td {
+        word-wrap: break-word; 
+    }
+
+    .prev-treatments, .announcements-slider {
+        padding: 10px;
+    }
+
+    .prev-treatments h2, .announcements h2 {
+        font-size: 20px;
+    }
+
+    .treatment p, .announcement-card p {
+        font-size: 14px;
+    }
+
+    .prev-announcement, .next-announcement {
+        font-size: 12px;
+    }
+}
+
+/* Mobile phones */
+@media screen and (max-width: 480px) {
+    .main-body {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .doctor-cards {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .doctor-card {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .doctor-card img {
+        max-width: 50px;
+        margin: 0 auto 5px;
+    }
+    .info-table {
+        width: 100%;  
+        table-layout: fixed; 
+    }
+
+    .info-table td {
+        word-wrap: break-word; 
+    }
+
+    .second-div {
+        width: 100%;
+    }
+
+    .prev-treatments, .announcements-slider {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .prev-treatments h2, .announcements h2 {
+        font-size: 18px;
+    }
+
+    .treatment p, .announcement-card p {
+        font-size: 12px;
+    }
+
+    .buttons {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .pagination {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .prev-announcement, .next-announcement {
+        width: 20%;
+        margin-top: 10px;
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,62 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/css/announcements_style.css' %}">
+{% endblock %}
+
+{% block title %}Announcements{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">Announcements</h1>
+    
+    {% if role == 'Admin'  %}
+        <a href="{% url 'core:announcement_create' %}">Create New Announcement</a>
+    {% endif %}
+    
+    <table class="announcement-table">
+        <thead>
+            <tr>
+
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created By</th>
+                {% if role == 'Admin'%}
+                <th>Date Created</th>
+                <th>Date Updated</th>
+                <th>Updated by</th>
+                {%endif%}
+                {% if role == 'Admin' or role == 'Receptionist' %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody id="announcement-table-body">
+            {% for announcement in announcements %}
+                <tr>
+                    <td>{{ announcement.title }}</td>
+                    <td>{{ announcement.description }}</td>
+                    <td>{{ announcement.creator.first_name }} {{ announcement.creator.last_name }}</td>
+                    {% if role == 'Admin'%}
+                    <td>{{ announcement.created_at|date:"Y-m-d H:i" }}</td>
+                    <td>{{ announcement.updated_at|date:"Y-m-d H:i" }}</td>
+                    <td>{{ announcement.updated_by}}</td>
+                   {%endif%}
+                    {% if role == 'Admin' %}
+                    <td>
+                        <a href="{% url 'core:announcement_update' announcement.id %}" >Update</a>
+                        <a href="{% url 'core:announcement_delete' announcement.id %}">Delete</a>
+                    </td>
+                {% elif role == 'Receptionist' %}
+                    <td class="actions">
+                        <a href="{% url 'core:announcement_update' announcement.id %}">Edit</a>
+                    </td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

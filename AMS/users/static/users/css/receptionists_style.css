@@ -1,0 +1,68 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Table Container Styles */
+.receptionists-table-container {
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/* Table Styles */
+.receptionists-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.receptionists-table th, .receptionists-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.receptionists-table th {
+    background-color:  #3E4E56;
+    color: white;
+}
+
+.receptionists-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+
+.receptionists-table img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .receptionists-table td, .receptionists-table th {
+        padding: 8px;
+    }
+
+    .receptionists-table img {
+        width: 50px;
+        height: 50px;
+    }
+}

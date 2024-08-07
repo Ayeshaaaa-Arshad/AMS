@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'treatments/css/feedback_form.css' %}">
+{% endblock %}
+
+{% block title %}Provide Feedback{% endblock %}
+
+{% block content %}
+<div class="feedback-container">
+    <h2>Provide Feedback for Treatment on {{ treatment.appointment.date }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.rating.label_tag }}
+            {{ form.rating }}
+        </div>
+        <div class="form-group">
+            {{ form.comment.label_tag }}
+            {{ form.comment }}
+        </div>
+        <button type="submit" class="submit-btn">Submit Feedback</button>
+    </form>
+</div>
+{% endblock %}

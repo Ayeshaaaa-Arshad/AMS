@@ -1,0 +1,82 @@
+/* Container Styling */
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* Header Styling */
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form .form-control {
+    margin-bottom: 15px;
+}
+
+form .form-control label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+form .form-control input,
+form .form-control select,
+form .form-control textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form .form-control textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* Button Styling */
+.update-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3E4E56;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    width: 250px;
+    margin-left: 200px;
+}
+
+.update-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Error and Success Messages */
+.error-message,
+.success-message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.error-message {
+    background-color: #dc3545;
+}
+
+.success-message {
+    background-color: #28a745;
+}

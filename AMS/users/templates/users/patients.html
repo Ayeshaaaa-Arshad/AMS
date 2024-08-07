@@ -1,0 +1,85 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'users/css/patients_style.css' %}">
+{% endblock %}
+
+{% block title %}Patients{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 style="text-align: center; margin-top: 20px;">Patients</h1>
+
+    {%if role == 'Doctor' %}
+    <!-- Top Half: My Patients -->
+    <div class="my-patients">
+        <h2>My Patients</h2>
+        <table class="patients-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if my_patients %}
+                {% for patient in my_patients %}
+                    <tr>
+                        <td>{{ patient.id }}</td>
+                        <td>{{ patient.user.first_name }} {{ patient.user.last_name }}</td>
+                        <td>{{ patient.user.email }}</td>
+                         </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center;">No patients found</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    {%endif%}
+
+    <!-- Bottom Half: Other Patients -->
+    <div class="other-patients">
+        <h2>All Patients</h2>
+        {%if role == 'Admin'%}
+        <a href ="{% url 'users:patient_create'%}">Create Patient</a>
+        {%endif%}
+        <table class="patients-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    {%if role == 'Admin'%}
+                    <th>CRUD</th>
+                    {%endif%}
+                </tr>
+            </thead>
+            <tbody>
+                {% if Patients %}
+                    {% for patient in Patients %}
+                    <tr>
+                        <td>{{ patient.id }}</td>
+                        <td>{{ patient.user.first_name }} {{ patient.user.last_name }}</td>
+                        <td>{{ patient.user.email }}</td>
+                        {%if role == 'Admin'%}
+                        <td><a href="{% url 'users:patient_update' patient.id %}">Update</a>
+                            <a href="{% url 'users:patient_delete' patient.id %}">Delete</a>
+                      </td>
+                        {%endif%}
+                         </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center;">No other patients found</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

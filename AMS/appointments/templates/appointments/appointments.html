@@ -1,0 +1,71 @@
+{% extends "core/base.html"%}
+{%load static%}
+
+{% block extra_css %}<link rel="stylesheet" href="{% static '/appointments/css/appointments_style.css' %}">{% endblock %}
+
+{% block title %}Appointments{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 style="margin-left: 40%; margin-top: 20px;">Appointments</h1>
+         {%if role != 'Doctor'%}
+         <a href ="{% url 'appointments:book_appointment' %}">Book Appointment</a>
+        {%endif%}
+    <table class="appointment-table">
+        <thead>
+            <tr>
+                {%if role != 'Doctor'%}
+                <th>Doctor</th>
+                {%endif%}
+                {%if role != 'Patient'%}
+                <th>Patient</th>
+                {%endif%}
+                <th>Date</th>
+                <th>Disease</th>
+                <th>Status</th>
+               
+                {%if role == 'Receptionist' or role == 'Admin'%}
+                <th>
+                Actions
+            </th>
+                {%endif%}
+               
+                {%if role != 'Doctor'%}
+                <th>
+                Cancel
+                </th>
+                {%endif%}
+
+            </tr>
+        </thead>
+        {% for appointment in Appointments%}
+        <tbody id="appointment-table-body">
+            <!-- Data will be dynamically populated here -->    
+             {%if role != 'Doctor'%}
+                <td>{{appointment.doctor.user.first_name}} {{appointment.doctor.user.last_name}}</td>
+              {%endif%}
+              {%if role != 'Patient'%}
+               <td>{{appointment.patient.user.first_name}} {{appointment.patient.user.last_name}}</td>
+               {%endif%}
+                <td>{{appointment.appointment_date}}</td>
+                <td>{{appointment.disease.name}}</td>
+                <td> {{appointment.get_status_display}}</td>  
+                {% if role == 'Receptionist' or role == 'Admin' %}
+                <td>
+                    <a href="{% url 'appointments:update_appointment' appointment.pk %}">Update</a>
+                   
+                </td>
+                {% endif %}
+                {%if role != 'Doctor'%}
+                <td>
+                <form method="post" action="{% url 'appointments:cancel_appointment' appointment.pk %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="cancel-btn">Cancel</button>
+                </form>
+            </td>
+            {%endif%}
+        </tbody>
+        {%endfor %}
+    </table>
+
+    {%endblock%}

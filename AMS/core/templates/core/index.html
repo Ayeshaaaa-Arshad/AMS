@@ -1,0 +1,121 @@
+<!-- index.html -->
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block extra_css %}<link rel="stylesheet" href="{% static '/core/css/index_style.css' %}">{% endblock %}
+
+{% block title %}Medicare{% endblock %}
+
+{% block content %}
+    <!-- Background Image Slider -->
+    <div class="slider">
+        <div class="slides">
+            <img src="{% static 'core/images/hospital_img.webp' %}" alt="Image-1">
+            <img src="{% static 'core/images/hospital_img2.jpg' %}" alt="Image-2">
+        </div>
+        <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="next" onclick="changeSlide(1)">&#10095;</button>
+        <div class="indicator">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+        </div>
+    </div>
+
+        <div class="main-body">    
+            <div id="doctor-info-container" class="doctor-cards">
+                {%for doctor in DataForGrid%}
+            <div class="doctor-card"> 
+                    <div>
+                         <img class="doctor-img" src="media/{{doctor.user.image}}" alt="Doctor Picture">
+                    </div>
+                        <div class="doctor-info">
+                            <table class="info-table">
+                                <tbody><tr>
+                                    <td>Name:</td>
+                                    <td>{{doctor.user.first_name}} {{doctor.user.last_name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td>{{doctor.user.email}}</td>
+                                </tr>
+                                <tr>
+                                    {%if role != 'Doctor'%}
+                                    <td>Designation:</td>
+                                    <td>{{doctor.designation}}</td>
+                                    
+                                    {%else%}
+                                    <td>Age:</td>
+                                    <td>{{doctor.age}}</td>
+                                    {%endif%}
+                                </tr>
+                            </tbody>
+                        </table>
+                            {%if role == 'Patient'%}
+                            <div class="buttons">
+                                <button class="book-btn" onclick="redirectToBooking()">Book Appointment</button>
+                                </div>    
+                            {%endif%}       
+                        </div>   
+                    </div>
+                    {%endfor%}
+                    
+                </div>
+                
+        {%if role == 'Admin'%}
+        <div class="admin-card">       
+                <div class="doctor-info">
+                    <table class="info-table">
+                        <tbody><tr>
+                            <td>Patient Count :</td>
+                            <td>{{patient_count}}</td>
+                        </tr>
+                        <tr>
+                            <td>Doctor Count :</td>
+                            <td>{{doctor_count}}</td>
+                        </tr>
+                        <tr>
+                            <td>Receptionist Count :</td>
+                            <td>{{receptionist_count}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        {%endif%}
+               
+        <div class="second-div">
+            <!-- Announcements Section -->
+            <div class="announcements-slider">
+                <div class="announcement-container">
+                    <!-- Announcements -->
+                     {% for announcement in Announcements%}
+                    <div class="announcement-card" style="display: none;">
+                        <h3>{{announcement.title}}</h3>
+                        <p>{{announcement.description}}</p>
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+
+            {%if role != 'Receptionist' and role != 'Admin'%}
+            <div class="prev-treatments">
+                <h2>Last Treatment</h2>
+                <ul id="prevTreatmentsList">
+                    <span><b>Patient :</b> {{Treatment.patient.user.first_name}} by  <b>Doctor:</b> {{Treatment.doctor.user.first_name}} - {{Treatment.appointment.appointment_date}}</span>
+                    <br><p>Result: {{Treatment.remarks}}</p>
+                    <br>
+                </ul>
+                </div>
+            {%endif%}
+        </div>
+    </div>
+
+    {%if role == 'Doctor' and not role == 'Admin'%}
+    <a href ="{% url 'users:patient_list'%}" style = "margin-left:50%;"> Click to see all Patients </a>
+    {%elif not role == 'Admin'%}
+    <a href ="{% url 'users:doctor_list'%}" style = "margin-left:50%;"> Click to see more doctors </a>
+    {%endif%}
+
+    {% block extra_js %} <script src="{% static 'core/js/index_script.js' %}"></script>{% endblock %}
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'appointments/css/book_appointment_style.css' %}">
+{% endblock %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="doctor-details">
+      <form method="post" action="{% url 'appointments:book_appointment' %}">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    
+        <div class="form-group">
+            {{ form.patient.label_tag }}
+            {{ form.patient }}
+            {% if form.patient.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.patient.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    
+        <div class="form-group">
+            {{ form.doctor.label_tag }}
+            {{ form.doctor }}
+            {% if form.doctor.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.doctor.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    
+        <div class="form-group">
+            {{ form.disease.label_tag }}
+            {{ form.disease }}
+            {% if form.disease.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.disease.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    
+        <div class="form-group">
+            {{ form.appointment_date.label_tag }}
+            {{ form.appointment_date }}
+            {% if form.appointment_date.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.appointment_date.errors %}
+                        <p style ="color:red">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    
+        <button type="submit" class="btn btn-primary">Book Appointment</button>
+    </form>
+    </div>
+  </div>
+{% endblock %}

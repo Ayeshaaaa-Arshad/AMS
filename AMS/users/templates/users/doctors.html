@@ -1,0 +1,56 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'users/css/doctors_style.css' %}">
+{% endblock %}
+
+{% block title %}Doctors{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 style="text-align: center; margin-top: 20px;">Doctors</h1>
+
+    <!-- Bottom Half: Other Doctors -->
+    <div class="other-doctors">
+        {%if role == 'Admin'%}
+        <a href ="{% url 'users:doctor_create'%}">Create Doctor</a>
+        {%endif%}
+        <table class="doctors-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Email</th>
+                    {%if role == 'Admin'%}
+                    <th>CRUD</th>
+                    {%endif%}
+                </tr>
+            </thead>
+            <tbody>
+                {% if other_doctors %}
+                    {% for doctor in other_doctors %}
+                    <tr>
+                        <td>{{ doctor.id }}</td>
+                        <td>{{ doctor.user.first_name }} {{ doctor.user.last_name }}</td>
+                        <td>{{ doctor.designation }}</td>
+                        <td>{{ doctor.user.email }}</td>
+                        {%if role == 'Admin'%}
+                        <td>
+                            <a href="{% url 'users:doctor_update' doctor.id %}">Update</a>
+                            <a href="{% url 'users:doctor_delete' doctor.id %}">Delete</a>
+                      </td>
+                        {%endif%} 
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center;">No other doctors found</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

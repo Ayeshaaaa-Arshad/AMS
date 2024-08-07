@@ -1,0 +1,45 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/css/diseases_style.css' %}">
+{% endblock %}
+
+{% block title %}Diseases{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 style="margin-left: 40%; margin-top: 20px;">Diseases</h1>
+
+    {% if role == 'Admin' %}
+    <a href="{% url 'core:disease_create' %}">Create Disease</a>
+    {% endif %}
+
+    <table class="disease-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                {% if role == 'Admin' %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for disease in diseases %}
+            <tr>
+                <td>{{ disease.name }}</td>
+                <td>{{ disease.description }}</td>
+                {% if role == 'Admin' %}
+                <td>
+                    <a href="{% url 'core:disease_update' disease.id %}">Update</a>
+                    <a href="{% url 'core:disease_delete' disease.id %}">Delete</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

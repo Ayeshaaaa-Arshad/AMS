@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'appointments/css/update_appointment_style.css' %}">
+{% endblock %}
+
+{% block title %}Update Appointment{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Update Appointment</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="update-btn">Update Appointment</button>
+    </form>
+</div>
+{% endblock %}

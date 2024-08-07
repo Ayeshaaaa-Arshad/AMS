@@ -1,0 +1,25 @@
+<!-- templates/core/announcement_form.html -->
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/css/announcement_form_style.css' %}">
+{% endblock %}
+
+{% block title %}Create Announcement{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">Create New Announcement</h1>
+
+    <p><strong>Logged in as:</strong> {{ user.get_full_name }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit" class="btn btn-primary">Create Announcement</button>
+        <a href="{% url 'core:announcement_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

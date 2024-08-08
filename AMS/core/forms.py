@@ -1,5 +1,6 @@
 from django import forms
-from .models import CustomUser,Announcement
+from core.models import Announcement
+from users.models import CustomUser
 
 
 #AnnouncementForm

@@ -60,7 +60,7 @@
                     {%if not treatment.feedback%}     
                     <a href="{%url 'treatments:provide_feedback' treatment.id%}">Provide Feedback</a>
                     {%else%}
-                    {{treatment.feedback.comment}}
+                    {{treatment.feedback.comment |truncatewords:40}}
                 </td>
                 {%endif%}
                 {%endif%}     

@@ -1,10 +1,8 @@
-
 from django import forms
-from treatments.forms import *
 from django.contrib.auth.models import Group
-from .models import CustomUser,Patient,Doctor
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from users.models import CustomUser,Patient,Doctor
 
 
 # Signup Form inherited from UserCreationForm as we want to add some extra fields 
@@ -15,7 +13,25 @@ class SignupForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ("email", "first_name","last_name", "password1", "password2")
+        fields = ("first_name","last_name","email", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password1'])
+
+        if commit:
+
+            user.save()
+
+            patient_group, created = Group.objects.get_or_create(name='Patient')
+            user.groups.add(patient_group)
+
+            # Create Patient profile
+            Patient.objects.get_or_create(user=user)
+
+            user.save()  # Save again to ensure groups are saved
+
+        return user
 
 # Login Form inherited from AuthenticationForm as we want to add some extra fields 
 class LoginForm(AuthenticationForm):

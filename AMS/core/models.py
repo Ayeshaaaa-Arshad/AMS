@@ -1,10 +1,8 @@
-from users.models import *
 from django.db import models
 from django.conf import settings
-from django.utils import timezone
+from users.models import CustomUser
 
-
-class BaseModel(models.Model):
+class DateTimeMixin(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     updated_by = models.ForeignKey(
@@ -17,7 +15,7 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-class Disease(BaseModel):
+class Disease(DateTimeMixin):
     name = models.CharField(max_length=255)
     description = models.TextField()
     
@@ -28,7 +26,7 @@ class Disease(BaseModel):
         return f"Disease: {self.name}"
 
 
-class Announcement(BaseModel):
+class Announcement(DateTimeMixin):
     creator = models.ForeignKey(CustomUser, related_name='announcements', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=255)

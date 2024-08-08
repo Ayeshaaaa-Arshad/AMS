@@ -1,8 +1,8 @@
 
 from django import forms
-from users.models import *
 from django.utils import timezone
-from .models import Appointment
+from users.models import Patient,Doctor
+from appointments.models import Appointment
 
 #AppointmentForm
 class AppointmentForm(forms.ModelForm):
@@ -18,7 +18,7 @@ class AppointmentForm(forms.ModelForm):
     
     class Meta:
         model = Appointment
-        fields = ['patient', 'doctor','status', 'disease', 'appointment_date']
+        fields = ['patient', 'doctor', 'disease', 'appointment_date']
         widgets = {
             'appointment_date': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}),
             'disease': forms.Select(attrs={'class': 'form-control'}),

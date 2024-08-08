@@ -1,7 +1,6 @@
-from .models import *
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-
+from users.models import Patient,Doctor,Receptionist,CustomUser
 
 #Customizing Admin Panel to see Users with more fields
 class CustomUserAdmin(BaseUserAdmin):

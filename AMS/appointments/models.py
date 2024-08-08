@@ -1,11 +1,9 @@
-from core.models import *
-from users.models import *
-from django.db import models
-from .constants import STATUS_CHOICES,PENDING
-from .CustomManager import AppointmentManager
-from .exceptions import AppointmentDateException
 from django.core.exceptions import ValidationError
-
+from django.db import models
+from appointments.constants import STATUS_CHOICES,PENDING
+from users.models import Patient,Doctor
+from appointments.CustomManager import AppointmentManager
+from core.models import Disease
 
 
 class Appointment(models.Model):

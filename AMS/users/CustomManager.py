@@ -1,5 +1,3 @@
-from .models import *
-from django.db.models.functions import *
 from django.contrib.auth.models import BaseUserManager
 
     

@@ -1,12 +1,12 @@
-from .forms import *
-from .models import *
-from .constants import *
 from django.urls import reverse_lazy
-from django.shortcuts import render, redirect
 from django.shortcuts import render,get_object_or_404,redirect,HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from django.views.generic import ListView,FormView,View
-
+from appointments.forms import AppointmentForm
+from appointments.models import Appointment
+from core.models import Disease
+from users.models import Patient,Doctor
+from appointments.constants import PENDING,COMPLETE,CANCELLED,STATUS_CHOICES
 
 # List View For Each patient's and doctor's all Appointments 
 class AppointmentView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
@@ -16,13 +16,8 @@ class AppointmentView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
     permission_required = 'AMS.view_appointment'
 
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
-
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -57,14 +52,9 @@ class BookAppointmentView(LoginRequiredMixin,PermissionRequiredMixin, FormView):
     form_class = AppointmentForm
     permission_required = 'AMS.add_appointment'
 
-    # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -76,8 +66,7 @@ class BookAppointmentView(LoginRequiredMixin,PermissionRequiredMixin, FormView):
             context['patients'] = Patient.objects.all()
             context['role'] = 'Admin' if user.groups.filter(name='Admin').exists() else 'Receptionist'
         elif user.groups.filter(name='Patient').exists():
-            if hasattr(user, 'patient_profile'):
-                context['patients'] = [user.patient_profile]
+            context['patients'] = [user.patient_profile]
             context['role'] = 'Patient'
 
         context['doctors'] = Doctor.objects.all()
@@ -85,14 +74,6 @@ class BookAppointmentView(LoginRequiredMixin,PermissionRequiredMixin, FormView):
 
     def form_valid(self, form):
         user = self.request.user
-
-        # Determine the role of the user and assign the patient
-        if user.groups.filter(name='Patient').exists():
-            if hasattr(user, 'patient_profile'):
-                form.instance.patient = user.patient_profile
-            else:
-                form.add_error(None, "Patient profile not found.")
-                return self.form_invalid(form)
 
         if user.groups.filter(name='Admin').exists() or user.groups.filter(name='Receptionist').exists():
             patient_id = self.request.POST.get('patient')
@@ -105,6 +86,13 @@ class BookAppointmentView(LoginRequiredMixin,PermissionRequiredMixin, FormView):
             else:
                 form.add_error(None, "Patient must be selected.")
                 return self.form_invalid(form)
+
+        # Determine the role of the user and assign the patient
+        elif user.groups.filter(name='Patient').exists():
+            form.instance.patient = user.patient_profile
+        else:
+            form.add_error(None, "Patient profile not found.")
+            return self.form_invalid(form)
 
         form.instance.status = PENDING
         form.instance.doctor = form.cleaned_data['doctor']
@@ -119,15 +107,10 @@ class UpdateAppointmentView(LoginRequiredMixin,PermissionRequiredMixin, View):
     login_url = reverse_lazy('users:login')
     permission_required = 'AMS.change_appointment'
 
-     # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
-        
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
+
     def get(self, request, pk):
         appointment = get_object_or_404(Appointment, pk=pk)
         if not (request.user.groups.filter(name='Receptionist').exists() or request.user.groups.filter(name='Admin').exists()):
@@ -152,15 +135,10 @@ class CancelAppointmentView(LoginRequiredMixin,PermissionRequiredMixin, View):
     login_url = reverse_lazy('users:login')
     permission_required = 'AMS.delete_appointment'
 
-     # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
-        
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
+
     def post(self, request, pk):
         appointment = get_object_or_404(Appointment, pk=pk)
         if (request.user.groups.filter(name='Doctor').exists()):

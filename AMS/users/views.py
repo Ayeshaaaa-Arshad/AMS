@@ -1,11 +1,10 @@
-from .forms import *
-from .models import *
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate, logout
-from django.shortcuts import redirect ,redirect , HttpResponse
+from django.shortcuts import  redirect , HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from django.views.generic import ListView,TemplateView,DetailView,FormView,CreateView,DeleteView,UpdateView
-
+from users.forms import SignupForm,LoginForm,PatientForm,CustomUserForm,DoctorForm,EditProfileForm
+from users.models import Patient,Doctor,CustomUser,Receptionist
 
 #Log out user
 def logout_user(request):
@@ -20,8 +19,10 @@ class SignupView(FormView):
 
     def form_valid(self, form):
         user = form.save()
+        # Log the user in
         login(self.request, user)
-        return redirect(self.success_url)  # Redirect to a success page
+
+        return redirect(self.success_url)
 
     def form_invalid(self, form):
         # Render the form with errors
@@ -39,8 +40,11 @@ class LoginView(FormView):
         user = authenticate(self.request, email=email, password=password)  # Authenticate using email and password
 
         if user is not None:
-            login(self.request, user)
-            return redirect(self.success_url)  # Redirect to a success page
+            if user.groups.all().exists():
+                login(self.request, user)
+                return redirect(self.success_url)  # Redirect to a success page
+            else:
+                raise ValidationError("You are not authorized user")
         else:
             return self.form_invalid(form)
 
@@ -55,12 +59,8 @@ class PatientListView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView)
 
     # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
 
     def get_context_data(self, **kwargs):
@@ -97,15 +97,10 @@ class PatientCreateView(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
     template_name = 'users/patient_form.html'
     success_url = reverse_lazy('users:patient_list')
     permission_required = 'AMS.add_patient'
-    
-        # Override handle_no_permission to customize the behavior when permission is denied
+
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -136,14 +131,9 @@ class PatientUpdateView(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
     success_url = reverse_lazy('users:patient_list')
     permission_required = 'AMS.change_patient'
 
-    # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -171,15 +161,9 @@ class PatientDeleteView(LoginRequiredMixin, PermissionRequiredMixin,DeleteView):
     success_url = reverse_lazy('users:patient_list')
     permission_required = 'AMS.delete_patient'
 
-    # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
-
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
 class PatientDetailView(DetailView):
     model = Patient
@@ -195,13 +179,8 @@ class DoctorListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
     permission_required = 'AMS.view_doctor'
 
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
-
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -240,15 +219,9 @@ class DoctorCreateView(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
     success_url = reverse_lazy('users:doctor_list')
     permission_required = 'AMS.add_doctor'
 
-    # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
-
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -279,14 +252,9 @@ class DoctorUpdateView(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
     success_url = reverse_lazy('users:doctor_list')
     permission_required = 'AMS.change_doctor'
 
-    # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -316,13 +284,8 @@ class DoctorDeleteView(LoginRequiredMixin,PermissionRequiredMixin, DeleteView):
 
     # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
-
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
 class ReceptionistListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
     model = Receptionist
@@ -331,13 +294,8 @@ class ReceptionistListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
     permission_required = 'AMS.view_receptionist'
 
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
-
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -372,14 +330,9 @@ class ReceptionistCreateView(LoginRequiredMixin, PermissionRequiredMixin,CreateV
     success_url = reverse_lazy('users:receptionist_list')
     permission_required = 'AMS.add_receptionist'
 
-    # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
     def form_valid(self, form):
         user = form.save()
@@ -395,14 +348,9 @@ class ReceptionistUpdateView(LoginRequiredMixin,PermissionRequiredMixin, UpdateV
     success_url = reverse_lazy('users:receptionist_list')
     permission_required = 'AMS.change_receptionist'
 
-    # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
     def get_object(self, queryset=None):
         receptionist = Receptionist.objects.get(pk=self.kwargs['pk'])
@@ -420,14 +368,9 @@ class ReceptionistDeleteView(LoginRequiredMixin, PermissionRequiredMixin,DeleteV
     success_url = reverse_lazy('users:receptionist_list')
     permission_required = 'AMS.delete_receptionist'
 
-    # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
     def get_object(self, queryset=None):
         receptionist = Receptionist.objects.get(pk=self.kwargs['pk'])

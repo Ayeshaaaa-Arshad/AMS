@@ -1,7 +1,8 @@
-from django.db import models
-from core.models import *
-from users.models import *
 from django.utils import timezone
+from django.db import models
+from core.models import Disease
+from users.models import Patient,Doctor
+
 
 
 class Treatment(models.Model):

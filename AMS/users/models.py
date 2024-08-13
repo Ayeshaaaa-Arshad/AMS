@@ -1,9 +1,8 @@
-from .constants import *
-from django.db import models
-from .CustomManager import UserManager
 from django.contrib.auth.models import AbstractUser
-from .validators import validate_image_file_extension
-
+from django.db import models
+from users.CustomManager import UserManager
+from users.validators import validate_image_file_extension
+from users.constants import GENDER_TYPE
 
 class CustomUser(AbstractUser):
 
@@ -20,13 +19,14 @@ class CustomUser(AbstractUser):
 
     objects = UserManager()
 
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
     
 
 class Patient(models.Model):
     user = models.OneToOneField(CustomUser, related_name='patient_profile', on_delete=models.CASCADE)
-    age = models.PositiveIntegerField()
+    age = models.PositiveIntegerField(null=True)
 
     class Meta:
         verbose_name = "Patient"

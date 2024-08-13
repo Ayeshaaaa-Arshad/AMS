@@ -1,7 +1,7 @@
 from django import forms
-from users.models import *
-from appointments.models import *
-from .models import Feedback,Treatment,Prescription
+from users.models import Patient,Doctor,Receptionist
+from appointments.models import Appointment
+from treatments.models import Feedback,Treatment,Prescription
 
 
 #Feedback Form

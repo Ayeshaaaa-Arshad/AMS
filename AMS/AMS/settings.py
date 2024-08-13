@@ -12,12 +12,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # for media files 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
@@ -25,7 +26,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-i2$e8mkzk00b8ihoo%(#7_sd(r7p9a8+*jo28p69bg7)#4c72('
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,18 +36,32 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+# System Apps: Django built-in apps
+SYSTEM_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core.apps.CoreConfig',
+]
+
+# Third-Party Apps: External packages installed via pip
+THIRD_PARTY_APPS = [
+    # will add later
+]
+
+# Project Apps: Your custom apps within the project
+PROJECT_APPS = [
+    'core',
     'users',
     'appointments',
-    'treatments',  
+    'treatments',
 ]
+
+# Combine all apps into the final INSTALLED_APPS
+INSTALLED_APPS = SYSTEM_APPS + THIRD_PARTY_APPS + PROJECT_APPS
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -94,8 +109,6 @@ WSGI_APPLICATION = 'AMS.wsgi.application'
 # }
 
 # MySQl Database connected
-
-load_dotenv()
 
 DATABASES = {
     'default': {

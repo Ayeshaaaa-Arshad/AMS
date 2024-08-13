@@ -1,14 +1,13 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-from appointments.constants import STATUS_CHOICES,PENDING
-from users.models import Patient,Doctor
+from appointments.constants import STATUS_CHOICES, PENDING
+from users.models import Patient, Doctor
 from appointments.CustomManager import AppointmentManager
-from core.models import Disease
+from core.models import Disease, DateTimeMixin
 
 
-class Appointment(models.Model):
-    
-    class Meta :
+class Appointment(DateTimeMixin):
+    class Meta:
         db_table = 'ams_appointment'
 
     patient = models.ForeignKey(Patient, related_name='appointments', on_delete=models.CASCADE)
@@ -30,7 +29,7 @@ class Appointment(models.Model):
         if self.patient and self.doctor:
             if self.patient.user == self.doctor.user:
                 raise ValidationError('A patient cannot be the same as the doctor and vice versa.')
-            
+
         # Check if the appointment date is in the past
         # if self.appointment_date < timezone.now():
         #     raise AppointmentDateException()

@@ -22,6 +22,9 @@
                 {%endif%}
                 <th>Date</th>
                 <th>Disease</th>
+                {%if role == 'Admin'%}
+                <th>Updated by</th>
+                {%endif%}
                 <th>Status</th>
                
                 {%if role == 'Receptionist' or role == 'Admin'%}
@@ -49,6 +52,9 @@
                {%endif%}
                 <td>{{appointment.appointment_date}}</td>
                 <td>{{appointment.disease.name}}</td>
+                {%if role == 'Admin'%}
+                <td>{{appointment.updated_by}}</td>
+                {%endif%}
                 <td> {{appointment.get_status_display}}</td>  
                 {% if role == 'Receptionist' or role == 'Admin' %}
                 <td>

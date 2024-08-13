@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib import admin
 from users.CustomManager import UserManager
 from users.validators import validate_image_file_extension
 from users.constants import GENDER_TYPE

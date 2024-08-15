@@ -27,10 +27,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-i2$e8mkzk00b8ihoo%(#7_sd(r7p9a8+*jo28p69bg7)#4c72('
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Django Debug Setting
+DEBUG = os.getenv('DEBUG', 'True').lower() in ['true', '1', 't']
 
-ALLOWED_HOSTS = []
+# Django Allowed Hosts
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 
 # Application definition

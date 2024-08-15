@@ -65,6 +65,7 @@ class AdvancedTreatmentYearListFilter(TreatmentYearListFilter):
             yield "2020-2030", "From 2020 to 2030"
 
 
+
 class TreatmentInline(admin.TabularInline):
     model = Treatment
     extra = 1

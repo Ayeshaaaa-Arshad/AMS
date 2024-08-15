@@ -1,6 +1,6 @@
-from .models import *
-from django.db.models import Count, Q
-from django.db.models.functions import *
+from .models import models
+from django.db.models import Count
+from django.db.models.functions import Coalesce
 
 # Custom Manager Now Appointment will have by default manager's dunctionalities plus these below
 class AppointmentManager(models.Manager):

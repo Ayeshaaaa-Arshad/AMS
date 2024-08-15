@@ -11,7 +11,7 @@
 <div class="container">
     <h1 class="page-title">Announcements</h1>
     
-    {% if role == 'Admin'  %}
+    {% if role == 'Admin' %}
         <a href="{% url 'core:announcement_create' %}">Create New Announcement</a>
     {% endif %}
     

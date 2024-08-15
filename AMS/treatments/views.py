@@ -1,10 +1,9 @@
-from .forms import *
-from .models import *
 from django.urls import reverse_lazy
-from django.shortcuts import redirect,get_object_or_404,redirect,HttpResponse
+from django.shortcuts import get_object_or_404,redirect,HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from django.views.generic import ListView,FormView,CreateView,UpdateView
-
+from treatments.forms import FeedbackForm,TreatmentForm,PrescriptionForm
+from treatments.models import Treatment,Prescription,Feedback
 
 # List View For Each patient's and doctor's all Treatments 
 class TreatmentView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
@@ -14,12 +13,8 @@ class TreatmentView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
     permission_required = 'AMS.view_treatment'
 
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
 
     def get_context_data(self, **kwargs):
@@ -58,14 +53,9 @@ class TreatmentCreateView(LoginRequiredMixin, PermissionRequiredMixin,CreateView
     success_url = reverse_lazy('treatments:treatment_list')
     permission_required = 'AMS.add_treatment'
 
-     # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
         
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -104,14 +94,9 @@ class TreatmentUpdateView(LoginRequiredMixin, PermissionRequiredMixin,UpdateView
     success_url = reverse_lazy('treatments:treatment_list')
     permission_required = 'AMS.change_treatment'
 
-     # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -151,14 +136,9 @@ class FeedbackFormView(LoginRequiredMixin,PermissionRequiredMixin,FormView):
     success_url = reverse_lazy('treatments:treatment_list')
     permission_required = 'AMS.add_feedback'
 
-     # Override handle_no_permission to customize the behavior when permission is denied
     def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            # Redirect to login page if the user is not authenticated
-            return redirect(self.get_login_url())
-        else:
-            # Return a custom HTTP response for permission denied
-            return HttpResponse("You do not have permission to view this page.", status=403)
+        # Return a custom HTTP response for permission denied
+        return HttpResponse("You do not have permission to view this page.", status=403)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

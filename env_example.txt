@@ -1,0 +1,10 @@
+# Database Configuration Keys
+
+DB_NAME # Name of your database
+DB_USER  # Database user
+DB_PASSWORD  # Database password
+DB_HOST  # Database host
+DB_PORT  # Database port
+
+# Django Secret Key
+SECRET_KEY # Secret key for Django

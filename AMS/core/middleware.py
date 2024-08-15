@@ -20,8 +20,6 @@ class CurrentUserMiddleware:
 
     def __call__(self, request):
         _user.user = request.user
-        print("----------------")
-        print("user in call",_user.user)
         response = self.get_response(request)
         _user.user = None
         return response

@@ -1,10 +1,12 @@
 from django.urls import reverse_lazy
+from django.core.exceptions import ValidationError
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import  redirect , HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from django.views.generic import ListView,TemplateView,DetailView,FormView,CreateView,DeleteView,UpdateView
 from users.forms import SignupForm,LoginForm,PatientForm,CustomUserForm,DoctorForm,EditProfileForm
 from users.models import Patient,Doctor,CustomUser,Receptionist
+
 
 #Log out user
 def logout_user(request):

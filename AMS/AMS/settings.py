@@ -49,7 +49,8 @@ SYSTEM_APPS = [
 
 # Third-Party Apps: External packages installed via pip
 THIRD_PARTY_APPS = [
-    # will add later
+    'django_celery_beat',
+    'django_celery_results',
 ]
 
 # Project Apps: Your custom apps within the project
@@ -165,4 +166,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom User Model
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# CELERY SETTINGS
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+# result expiration time
+CELERY_TASK_RESULT_EXPIRES = 86400  # 1 day
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
